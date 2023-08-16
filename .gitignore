@@ -1,2 +1,3 @@
 yarn add gh-pages -Dnode_modules
 node_modules
+.env
