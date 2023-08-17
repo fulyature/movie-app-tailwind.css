@@ -1,7 +1,9 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +16,11 @@ export const AuthContext = createContext();
 // }
 
 const AuthContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(false);
   let navigate = useNavigate();
+  useEffect(() => {
+    userObserver();
+  }, []);
   const createUser = async (email, password) => {
     //yeni bir kullanıcı olusturmak ıcın kullanılan firebase metodu.. email ve paswordu register sayfasıında kullanıyoruz. valuesları burda olustururup contex.provider dan gonderıyoruz. register sayfasında cagırıyoruz
 
@@ -39,12 +45,34 @@ const AuthContextProvider = ({ children }) => {
         email,
         password
       );
-
+      navigate("/");
+      toastSuccessNotify("Logged in successfully");
       console.log(userCredential);
-    } catch (error) {}
+    } catch (error) {
+      toastErrorNotify(error.message);
+    }
   };
 
-  const values = { createUser, signIn };
+  const logOut = () => {
+    signOut(auth);
+    toastSuccessNotify("Logged out succesfully");
+  };
+  const userObserver = () => {
+    //? Kullanıcının signin olup olmadığını takip eden ve kullanıcı değiştiğinde yeni kullanıcıyı response olarak dönen firebase metodu
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { email, displayName, photoURL } = user;
+        setCurrentUser({ email, displayName, photoURL });
+        console.log(user);
+      } else {
+        // User is signed out
+        setCurrentUser(false);
+        console.log("logged out");
+      }
+    });
+  };
+
+  const values = { createUser, signIn, logOut, currentUser };
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 export default AuthContextProvider;
