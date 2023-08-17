@@ -3,7 +3,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import avatar from "../assets/icons/avatar.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Switch from "./Switch";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -11,7 +10,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { logOut, currentUser } = useContext(AuthContext);
-  const currentUser = { displayName: "fulya" };
+  const { displayName } = currentUser ?? "fulya";
   return (
     <>
       <Disclosure
@@ -25,9 +24,8 @@ export default function Navbar() {
             </Link>
             <div className="absolute inset-y-0 right-0 flex items-center ">
               {currentUser && (
-                <h5 className="mr-2 capitalize">{currentUser?.displayName}</h5>
+                <h5 className="mr-2 capitalize">{displayName}</h5>
               )}
-              <Switch />
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>

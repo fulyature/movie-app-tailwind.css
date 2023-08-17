@@ -5,6 +5,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/Toastify";
 export const AuthContext = createContext();
 
 //* with custom hook
@@ -13,9 +14,10 @@ export const AuthContext = createContext();
 // }
 
 const AuthContextProvider = ({ children }) => {
+  let navigate = useNavigate();
   const createUser = async (email, password) => {
     //yeni bir kullanıcı olusturmak ıcın kullanılan firebase metodu.. email ve paswordu register sayfasıında kullanıyoruz. valuesları burda olustururup contex.provider dan gonderıyoruz. register sayfasında cagırıyoruz
-    let navigate = useNavigate();
+
     try {
       let userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -23,8 +25,10 @@ const AuthContextProvider = ({ children }) => {
         password
       );
       console.log(userCredential);
+      navigate("/");
+      toastSuccessNotify("Registered succesfully");
     } catch (error) {
-      console.log(error);
+      toastErrorNotify(error.message);
     }
   };
   const signIn = async (email, password) => {
@@ -35,7 +39,7 @@ const AuthContextProvider = ({ children }) => {
         email,
         password
       );
-      navigate("/");
+
       console.log(userCredential);
     } catch (error) {}
   };
