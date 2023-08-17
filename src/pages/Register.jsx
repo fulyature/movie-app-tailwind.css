@@ -11,20 +11,42 @@ const Register = () => {
           <h2 className="text-red-main text-2xl font-[500] text-center tracking-[0.1em] mb-3">
             Sign Up
           </h2>
-          <div>
-            <input name="floating_text" type="text" required />
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              className="peer"
+              name="floating_text"
+              type="text"
+              required
+              placeholder=""
+            />
             <label htmlFor="floating_text">First Name</label>
           </div>
-          <div>
-            <input name="floating_text" type="text" required />
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              className="peer"
+              name="floating_text"
+              type="text"
+              required
+              placeholder=""
+            />
             <label htmlFor="floating_text">Last Name</label>
           </div>
-          <div>
-            <input name="floating_email" type="email" />
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              className="peer"
+              name="floating_email"
+              type="email"
+              placeholder=""
+            />
             <label htmlFor="floating_email">Email</label>
           </div>
-          <div>
-            <input name="floating_password" type="password" />
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              className="peer"
+              name="floating_password"
+              type="password"
+              placeholder=""
+            />
             <label htmlFor="floating_password">Password</label>
           </div>
           <button type="submit" className="btn-danger">
