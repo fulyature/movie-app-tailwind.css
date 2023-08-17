@@ -11,7 +11,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { logOut, currentUser } = useContext(AuthContext);
-  // const currentUser = { displayName: "felix franko" };
+  const currentUser = { displayName: "fulya" };
   return (
     <>
       <Disclosure
