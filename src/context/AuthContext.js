@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,7 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     userObserver();
   }, []);
-  const createUser = async (email, password) => {
+  const createUser = async (email, password, displayName) => {
     //yeni bir kullanıcı olusturmak ıcın kullanılan firebase metodu.. email ve paswordu register sayfasıında kullanıyoruz. valuesları burda olustururup contex.provider dan gonderıyoruz. register sayfasında cagırıyoruz
 
     try {
@@ -30,6 +31,10 @@ const AuthContextProvider = ({ children }) => {
         email,
         password
       );
+      //kullanıcı profılı guncellemek ıcın kullanılan firebase metodu
+      await updateProfile(auth.currentUser, {
+        displayName,
+      });
       console.log(userCredential);
       navigate("/");
       toastSuccessNotify("Registered succesfully");
