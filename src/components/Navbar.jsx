@@ -34,8 +34,10 @@ export default function Navbar() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
+                      //.googledakı foto url alınır
                       src={currentUser?.photoURL || avatar}
                       alt="user"
+                      //harici linklerde güvenlik uyarısı ıcın verılır
                       referrerPolicy="no-referrer"
                     />
                   </Menu.Button>
