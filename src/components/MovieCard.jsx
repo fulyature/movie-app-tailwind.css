@@ -1,12 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 const defaultImage =
   "https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
 
-const MovieCard = ({ title, poster_path, overview, vote_average }) => {
+const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
+  let navigate = useNavigate();
   return (
-    <div className="movie" id="container">
+    <div
+      className="movie"
+      id="container"
+      onClick={() => navigate("/details/" + id)}
+    >
       <img
         loading="lazy"
         src={poster_path ? IMG_API + poster_path : defaultImage}

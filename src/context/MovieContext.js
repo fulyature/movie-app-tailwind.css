@@ -19,7 +19,7 @@ const MovieContextProvider = ({ children }) => {
     setLoading(true);
     axios
       .get(API)
-      .then((res) => console.log(res.data.result))
+      .then((res) => setMovies(res.data.results))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   };
